@@ -1,25 +1,33 @@
-import logo from './logo.svg';
-import './App.css';
+import React, { Component } from 'react'
+// CSS
+import './App.css'
 
-function App() {
-  return (
-    <div className="App">
-      <header className="App-header">
-        <img src={logo} className="App-logo" alt="logo" />
-        <p>
-          Edit <code>src/App.js</code> and save to reload.
-        </p>
-        <a
-          className="App-link"
-          href="https://reactjs.org"
-          target="_blank"
-          rel="noopener noreferrer"
-        >
-          Learn React
-        </a>
-      </header>
-    </div>
-  );
+import Header from './components/Header'
+import Admin from './components/Admin'
+import Card from './components/Card'
+import recettes from './recettes'
+
+class App extends Component {
+  state = {
+    pseudo: this.props.match.params.pseudo,
+    recettes: {}
+  }
+  
+  chargerExemple = () =>  this.setState({ recettes })
+
+  render () {
+    const cards = Object.keys(this.state.recettes)
+       .map(key => <Card key={key} details={this.state.recettes[key]} />)
+    return (
+      <div className='box'>
+        <Header pseudo={this.state.pseudo}/>
+        <div className='cards'>
+          { cards }
+        </div>
+        <Admin chargerExemple={this.chargerExemple}/>
+      </div>
+    )
+  }
 }
 
-export default App;
+export default App
